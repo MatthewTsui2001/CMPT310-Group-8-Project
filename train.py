@@ -12,8 +12,8 @@ from model import multitask_model
 #pip install matplotlib
 
 BATCH_SIZE = 64
-IMG_HEIGHT = 128
-IMG_WIDTH = 128
+IMG_HEIGHT = 224
+IMG_WIDTH = 224
 EPOCHS = 10
 SEED = 10
 TRAIN_SIZE = 0.8
@@ -98,7 +98,7 @@ def pre_process_image(filepath, breed, age):
     #split each pixel to rgb values
     image = tf.io.decode_jpeg(image, channels = 3)
     #resize for model
-    image = tf.image.resize(image, [128, 128])
+    image = tf.image.resize(image, [IMG_HEIGHT, IMG_WIDTH])
     #normalize each pixel value (0.0 to 1.0)
     image = tf.cast(image, tf.float32)
 
@@ -160,11 +160,21 @@ val_ds = tf_batching(val_df, is_training = False)
 print("Initializing Model...")
 model = multitask_model()
 
+lr_decay = tf.keras.optimizers.schedules.CosineDecay(
+    initial_learning_rate = 1e-3,
+    decay_steps = 204 * EPOCHS,
+    alpha = 0.01
+)
+
 model.compile(
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001),
+    optimizer = tf.keras.optimizers.Adam(learning_rate = lr_decay),
     loss = {
         "breed_output": make_masked_loss(),
         "age_output": make_masked_loss()
+    },
+    loss_weights = {
+        "breed_output": 1.0,
+        "age_output": 3.0
     },
     metrics = {
         "breed_output": breed_accuracy,

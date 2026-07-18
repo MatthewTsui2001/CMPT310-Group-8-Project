@@ -1,0 +1,49 @@
+First run - multitask_model.keras:
+Epoch 10/10
+204/204 - 84s - 410ms/step
+    - age_output_age_accuracy: 0.4284
+- age_output_loss: 1.0553
+    - breed_output_breed_accuracy: 0.2418
+- breed_output_loss: 2.6925
+- loss: 3.7481
+    - val_age_output_age_accuracy: 0.4160
+- val_age_output_loss: 1.0714
+       - val_breed_output_breed_accuracy: 0.0205
+- val_breed_output_loss: 5.2269
+- val_loss: 6.2994
+*NOTE: terrible overfitting of the breed dataset
+
+Second run - self-trained_multitask_model.keras:
+Epoch 10/10
+204/204 - 112s - 547ms/step
+    - age_output_age_accuracy: 0.4484
+- age_output_loss: 1.0363
+    - breed_output_breed_accuracy: 0.2482
+- breed_output_loss: 2.6675 
+- loss: 3.7032
+    - val_age_output_age_accuracy: 0.3983
+- val_age_output_loss: 1.0785
+    - val_breed_output_breed_accuracy: 0.0151
+- val_breed_output_loss: 6.2006
+- val_loss: 7.2811
+*NOTE: with 120 breeds and only ~6400 training images, each breed only has avg 53 examples
+
+
+Third Run - data_augmentation_multitask_model.keras
+Epoch 10/10
+204/204 - 351s - 2s/step
+    - age_output_age_accuracy: 0.4536
+- age_output_loss: 1.0406
+    - breed_output_breed_accuracy: 0.1493
+- breed_output_loss: 3.2136
+- loss: 6.3353
+    - val_age_output_age_accuracy: 0.3794
+- val_age_output_loss: 1.0862
+    - val_breed_output_breed_accuracy: 0.0171
+- val_breed_output_loss: 4.9229
+- val_loss: 8.1843
+*Note: data_augmentation (rotations and flipping images), the model performed worse
+
+TODO (?):
+Third run - mobilenet_v2_0_weights_model.keras
+Fourth run - mobilenet_v2_imagenet_weights_model.keras
