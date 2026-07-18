@@ -1,8 +1,8 @@
 import tensorflow as tf
 from tensorflow.keras import layers, Model
 
-IMG_HEIGHT = 128
-IMG_WIDTH = 128
+IMG_HEIGHT = 224
+IMG_WIDTH = 224
 NUM_BREEDS = 120    # Stanford dataset = 120 dog breeds
 NUM_AGE_GROUPS = 3  # DogAge dataset = 3 age categories (Young, Adult, Senior)
 
@@ -47,14 +47,14 @@ def multitask_model():
 
     #breed classification branch
     #apply neurons
-    breed_features = layers.Dense(128, activation = 'relu')(features)
+    breed_features = layers.Dense(224, activation = 'relu')(features)
     #drop neurons (reduce overfit)
     breed_features = layers.Dropout(0.5)(breed_features)
     #apply neurons, softmax assigns probability of breed type
     breed_output = layers.Dense(NUM_BREEDS, activation = 'softmax', name = 'breed_output')(breed_features)
 
     #age classification branch
-    age_features = layers.Dense(128, activation = 'relu')(features)
+    age_features = layers.Dense(224, activation = 'relu')(features)
     age_features = layers.Dropout(0.2)(age_features)
     age_output = layers.Dense(NUM_AGE_GROUPS, activation = 'softmax', name = 'age_output')(age_features)
 
