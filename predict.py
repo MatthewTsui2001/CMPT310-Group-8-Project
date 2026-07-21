@@ -7,7 +7,7 @@ from PIL import Image, ImageTk
 from model import model
 
 
-model = tf.keras.models.load_model('my_model.keras')
+#model = tf.keras.models.load_model('my_model.keras')
 
 # image uploader function
 def imageUploader():
@@ -61,7 +61,7 @@ app.option_add("*Button*Background", "lightgreen")
 
 
 # defining our upload buttom
-uploadButton = tk.Button(app, text="Locate Image", command=imageUploader)
+uploadButton = tk.Button(app, text="Upload Image", command=imageUploader)
 uploadButton.pack(side=tk.BOTTOM, pady=20)
 
 
